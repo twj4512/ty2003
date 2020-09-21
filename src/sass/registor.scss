@@ -1,0 +1,60 @@
+@import 'publice';
+
+/* 注册头部 */
+.header{
+    background-color: #e0e0e0;
+    margin-bottom: 30px;
+    .head{
+        @include size(1203px,70px);
+        // display: flex;
+        // justify-items: center;
+        .logo{
+            img{
+               margin-top: 10px;
+            }
+        }
+        p{
+            display: inline-block;
+            line-height: 70px;
+            margin-left: 94px;
+            color: #008842;
+            font-size: 28px;
+        }
+    }
+    
+}
+
+/* 页面 */
+.reg{
+    @include size(1203px,632px);
+    margin-bottom: 30px;
+    background-color: brown;
+    padding:40px 0  50px 0;
+    border:2px solid #a5c9b6;
+    border-top: none;
+    .fl{
+        @include size(616px,516px);
+        .captcha{
+            img{
+                display: inline-block;
+            }
+            a{
+                // display: block;
+                // float: left;
+            }
+        }
+    }
+    .fr{
+
+    }
+}
+
+
+/* 底部边框线 */
+.bor{
+    width: 100%;
+    height: 0px;
+    border-top: 1px solid #e0e0e0;
+    padding-bottom: 30px;
+    // border-top: 1px solid black;
+}

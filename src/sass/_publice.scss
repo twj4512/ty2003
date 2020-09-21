@@ -1,0 +1,95 @@
+/* css rest */
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dd,hr,ul,ol,td,input,option,textarea{
+	margin:0;
+	padding:0;
+}
+ul,ol{ list-style: none;}
+a{ text-decoration: none;}
+img{ display: block;}
+h1,h2,h3{ font-size:16px;}
+
+/* css common */
+.l{ float:left;}
+.r{ float:right;}
+.clear:after{ content:""; display: block; clear:both;}
+.container{ width:1203px; margin:0 auto; position: relative;}
+.container-fluid{ position: relative ;}
+
+body{background-color: #f7f8f8;}
+
+
+@mixin size($width,$height){
+    width : $width;
+    height : $height;
+}
+
+/* 底部 */
+.footer{
+	margin-top: 47px;
+	.foo-lis{
+		margin-bottom: 57px;
+		display: flex;
+		.xs{
+			margin-left: 50px;
+			dt{
+				display: inline-block;
+				font-size: 14px;
+				color: #444444;
+				@include size(155px,23px);
+				background: url(../images/footer_icon.png) no-repeat;
+				padding-left: 40px;
+				vertical-align: middle;
+				margin-bottom: 13px;
+			}
+			dd{
+				border-left: 1px dashed #A8A8A8;
+				padding-left: 30px;
+				margin-left: 13px;
+				a{
+					font-size: 12px;
+					color: #444444;
+					display: block;
+					line-height: 22px;
+	
+				}
+			}
+		}
+
+	}
+	.service{
+		text-align: center;
+		margin-bottom: 20px;
+		margin-right: 20px;
+		span{
+			color: #008842;
+			font-size: 14px;
+			margin-left: 20px;
+		}
+	}
+
+	.copyright{
+		text-align: center;
+		line-height: 22px;
+		color: #717171;
+		font-size: 12px;
+		p{
+			text-align: center;
+			a{
+				display: inline-block;
+				color: #717171;
+			}
+			
+		}
+		.authentication{
+			a{
+				margin-left: 25px;
+			}
+			.ss{
+				margin-left: 25px;
+				a{margin-left: 0px;}
+			}
+		}
+	}
+
+
+}

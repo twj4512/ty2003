@@ -1,20 +1,20 @@
 //导入依赖包
-const   gulp = require('gulp'),
-        //加载js相关的依赖包
-        // 打包压缩ES5规范的的依赖包
-        uglify = require('gulp-uglify'),
-        babel = require('gulp-babel'),
-        //html压缩依赖包
-        htmlmin = require('gulp-htmlmin'),
-        //编译sass依赖包
-        sass = require('gulp-sass'),
-        //cssmin依赖包
-        cssmin = require('gulp-cssnano'),
-        autoprefixer = require('gulp-autoprefixer'),
-        //重命名依赖包
-        rename = require('gulp-rename'),
-        //del删除依赖包
-        del = require('del'),
+const gulp = require('gulp');
+//加载js相关的依赖包
+// 打包压缩ES5规范的的依赖包
+const uglify = require('gulp-uglify');
+babel = require('gulp-babel');
+//html压缩依赖包
+const htmlmin = require('gulp-htmlmin');
+//编译sass依赖包
+const sass = require('gulp-sass');
+//cssmin依赖包
+const cssmin = require('gulp-cssnano');
+const autoprefixer = require('gulp-autoprefixer');
+//重命名依赖包
+const rename = require('gulp-rename');
+//del删除依赖包
+const del = require('del');
 
 //创建任务
 // 匿名函数形式声明
@@ -23,12 +23,18 @@ const   gulp = require('gulp'),
 const sassHandler = function(){
     return gulp.src('./src/sass/*.scss')//先找到要编译的scss文件
     .pipe(sass({outputStyle: 'expanded'}))//进行编译 成css文件
-    .pipe(autoprefixer())// 添加前缀
-    .pipe(cssmin())//压缩css文件
-    .pipe(rename({suffix : '.min'}))//重命名
-    .pipe(gulp.dest('./dist/css'))
+    .pipe(gulp.dest('./src/sass'))
     // 将压缩后的css文件 
     //通过gulp的dest()方法导入到dist的css中
+}
+
+//压缩sass编译好的css文件
+const cssHandler = function(){
+    return gulp.src('./src/sass/*.css')
+    .pipe(autoprefixer())// 添加前缀
+    .pipe(cssmin())//压缩css文件
+    //.pipe(rename({suffix : '.min'}))//重命名
+    .pipe(gulp.dest('./dist/css'))
 }
 
 //压缩js
@@ -36,7 +42,8 @@ const jsHandler = function(){
     return gulp.src('./src/js/*.js')
     .pipe(babel({presets:['@babel/env']}))//固定语法
     //压缩js文件
-    .pipe(uglify)
+    .pipe(uglify())
+    .pipe(rename({suffix : '.min'}))//重命名
     //将打包压缩好的程序,存储在指定位置上
     .pipe(gulp.dest('./dist/js'))
 
@@ -68,8 +75,9 @@ const htmlHandler = function(){
 const imgHandler = function(){
     //指定要移动的图片所在的文件夹位置
     return gulp.src('./src/images/*.*')
+    .pipe(rename({suffix : '.min'}))//重命名
     //指定要移动的文件位置
-    .pepe(gulp.dest('./dist/images'))
+    .pipe(gulp.dest('./dist/images'))
 }
 
 //创建删除程序
@@ -82,6 +90,8 @@ const delHandler = function(){
 const watchHandler = function(){
     //监听sass文件
     gulp.watch('./src/sass/*.scss', sassHandler);
+    //监听css文件
+    gulp.watch('./src/sass/*.css', cssHandler);
     //监听 js 文件
     gulp.watch('./src/js/*.js', jsHandler);
     //监听 html 文件
@@ -93,5 +103,8 @@ const watchHandler = function(){
 //定义gulp的默认执行程序
 module.exports.default = gulp.series(
     delHandler,
-    
+    //默认的,第一次,初始化,先执行一次所有的打包规范
+    gulp.parallel(sassHandler, cssHandler,jsHandler,htmlHandler,imgHandler),
+    //监听
+    watchHandler,
 )
